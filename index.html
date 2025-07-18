@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Heads Men - Premium Barbershop Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Cool Heads Men</h1>
+                    <span class="tagline">Premium Grooming</span>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-link">HOME</a></li>
+                        <li><a href="#services" class="nav-link">SERVICES</a></li>
+                        <li class="location-selector">
+                            <a href="#locations" class="nav-link location-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>LOCATIONS</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <div class="location-dropdown">
+                                <div class="dropdown-header">
+                                    <h3>Choose a location</h3>
+                                    <div class="dropdown-controls">
+                                        <i class="fas fa-bars"></i>
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                                <div class="location-tabs">
+                                    <button class="tab-btn active" data-tab="nearby">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        NEARBY
+                                    </button>
+                                    <button class="tab-btn" data-tab="search">
+                                        <i class="fas fa-search"></i>
+                                        SEARCH
+                                    </button>
+                                </div>
+                                <div class="location-list" id="locationList">
+                                    <!-- Locations will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="#book" class="nav-link book-now">BOOK NOW</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="mobile-menu-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="hero-title">VOTED BEST BARBERSHOP</h2>
+                    <h3 class="hero-subtitle">DFW Metroplex</h3>
+                    <p class="hero-description">Experience the best of DFW. Many convenient locations to choose from.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary" id="bookNowBtn">BOOK NOW</button>
+                        <button class="btn btn-secondary">FIND A SALON</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Media Sidebar -->
+        <div class="social-sidebar">
+            <a href="#" class="social-link facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link youtube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="social-link app-store">
+                <i class="fab fa-apple"></i>
+            </a>
+            <a href="#" class="social-link play-store">
+                <i class="fab fa-google-play"></i>
+            </a>
+        </div>
+
+        <!-- Chat Widget -->
+        <div class="chat-widget">
+            <i class="fas fa-comments"></i>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Professional grooming services tailored to your style</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>Classic Haircut</h3>
+                    <p>Traditional cuts with modern precision</p>
+                    <div class="service-details">
+                        <span class="duration">45 min</span>
+                        <span class="price">$35</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-razor"></i>
+                    </div>
+                    <h3>Skin Fade</h3>
+                    <p>Clean fade with skin exposure</p>
+                    <div class="service-details">
+                        <span class="duration">45 min</span>
+                        <span class="price">$40</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-beard"></i>
+                    </div>
+                    <h3>Beard Trim</h3>
+                    <p>Professional beard shaping and grooming</p>
+                    <div class="service-details">
+                        <span class="duration">30 min</span>
+                        <span class="price">$25</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Hot Towel Shave</h3>
+                    <p>Traditional straight razor shave</p>
+                    <div class="service-details">
+                        <span class="duration">45 min</span>
+                        <span class="price">$45</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations" id="locations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Locations</h2>
+                <p>Find a Cool Heads Men location near you</p>
+            </div>
+            <div class="locations-container">
+                <div class="locations-grid" id="locationsGrid">
+                    <!-- Locations will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Expert Haircare in DFW</h2>
+                    <p>Cool Heads Men brings luxury and precision to the Dallas-Fort Worth metroplex. Our modern spaces are designed for comfort and style, staffed by skilled stylists who understand the art of grooming. From classic haircuts to contemporary styles, we offer a comprehensive range of services including color treatments, scalp massages, and beard grooming.</p>
+                    <div class="about-cta">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-calendar"></i>
+                            BOOK APPOINTMENT
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-phone"></i>
+                            CONTACT US NOW
+                        </button>
+                    </div>
+                </div>
+                <div class="about-gallery">
+                    <div class="gallery-header">
+                        <i class="fab fa-instagram"></i>
+                        <span>@coolheadsmen</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Modern Barbershop Chair">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Haircut Style">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1519415943484-cfbdfb8361a8?auto=format&fit=crop&w=400&q=80" alt="Barber at Work">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Barbershop Interior">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Grooming Tools">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Barber and Client">
+                        </div>
+                    </div>
+                    <div class="gallery-actions">
+                        <button class="btn btn-small">Load More</button>
+                        <button class="btn btn-small btn-outline">
+                            <i class="fab fa-instagram"></i>
+                            Follow on Instagram
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Cool Heads Men</h3>
+                    <p>Premium grooming services across the DFW metroplex.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Haircuts</a></li>
+                        <li><a href="#">Beard Trims</a></li>
+                        <li><a href="#">Hot Towel Shaves</a></li>
+                        <li><a href="#">Color Treatments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Locations</h4>
+                    <ul>
+                        <li><a href="#">Highland Village</a></li>
+                        <li><a href="#">Flower Mound</a></li>
+                        <li><a href="#">Las Colinas</a></li>
+                        <li><a href="#">Frisco</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> (972) 555-0123</li>
+                        <li><i class="fas fa-envelope"></i> info@coolheadsmen.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Sat: 9AM-7PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cool Heads Men. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Your Appointment</h3>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="booking-step active" data-step="service">
+                    <h4>Choose a service</h4>
+                    <div class="service-options">
+                        <div class="service-option">
+                            <input type="radio" name="service" id="classic" value="classic">
+                            <label for="classic">
+                                <span class="service-name">CLASSIC HAIRCUT</span>
+                                <span class="service-duration">45 min</span>
+                                <span class="service-price">$35</span>
+                            </label>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" name="service" id="fade" value="fade">
+                            <label for="fade">
+                                <span class="service-name">SKIN FADE</span>
+                                <span class="service-duration">45 min</span>
+                                <span class="service-price">$40</span>
+                            </label>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" name="service" id="beard" value="beard">
+                            <label for="beard">
+                                <span class="service-name">BEARD TRIM</span>
+                                <span class="service-duration">30 min</span>
+                                <span class="service-price">$25</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-step" data-step="location">
+                    <h4>Choose a location</h4>
+                    <div class="location-options" id="modalLocationOptions">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="booking-step" data-step="time">
+                    <h4>Choose a time</h4>
+                    <div class="time-options">
+                        <div class="date-picker">
+                            <div class="date-nav">
+                                <button class="date-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                                <span class="current-month">July 2024</span>
+                                <button class="date-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="date-grid" id="dateGrid">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="booking-summary">
+                    <span>Total: <strong id="bookingTotal">$0</strong></span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="prevStep">Back</button>
+                    <button class="btn btn-primary" id="nextStep">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
