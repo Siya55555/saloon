@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cool Heads Men - Premium Barbershop Services</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -24,7 +24,7 @@
                         <li class="location-selector">
                             <a href="#locations" class="nav-link location-link">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>LOCATIONS</span>
+                                <span id="selectedLocationName">LOCATIONS</span>
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                             <div class="location-dropdown">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li><a href="#book" class="nav-link book-now">BOOK NOW</a></li>
+                        <li><a href="#book" class="nav-link book-now" id="bookNowBtnNav">BOOK NOW</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
@@ -290,79 +290,63 @@
     <!-- Booking Modal -->
     <div class="modal" id="bookingModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Book Your Appointment</h3>
+            <div class="modal-header" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                <button class="modal-back" id="modalBackBtn" style="display:none; background:none; border:none; font-size:20px; cursor:pointer; margin-right:10px;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span id="modalStepTitle" style="flex:1; text-align:center; font-size:20px; font-weight:600;"></span>
                 <button class="modal-close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="booking-step active" data-step="service">
-                    <h4>Choose a service</h4>
-                    <div class="service-options">
-                        <div class="service-option">
-                            <input type="radio" name="service" id="classic" value="classic">
-                            <label for="classic">
-                                <span class="service-name">CLASSIC HAIRCUT</span>
-                                <span class="service-duration">45 min</span>
-                                <span class="service-price">$35</span>
-                            </label>
-                        </div>
-                        <div class="service-option">
-                            <input type="radio" name="service" id="fade" value="fade">
-                            <label for="fade">
-                                <span class="service-name">SKIN FADE</span>
-                                <span class="service-duration">45 min</span>
-                                <span class="service-price">$40</span>
-                            </label>
-                        </div>
-                        <div class="service-option">
-                            <input type="radio" name="service" id="beard" value="beard">
-                            <label for="beard">
-                                <span class="service-name">BEARD TRIM</span>
-                                <span class="service-duration">30 min</span>
-                                <span class="service-price">$25</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="booking-step" data-step="location">
-                    <h4>Choose a location</h4>
-                    <div class="location-options" id="modalLocationOptions">
+                <div class="booking-step active" data-step="professional">
+                    
+                    <div class="professional-grid" id="professionalGrid">
                         <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
-                <div class="booking-step" data-step="time">
-                    <h4>Choose a time</h4>
-                    <div class="time-options">
-                        <div class="date-picker">
-                            <div class="date-nav">
-                                <button class="date-nav-btn"><i class="fas fa-chevron-left"></i></button>
-                                <span class="current-month">July 2024</span>
-                                <button class="date-nav-btn"><i class="fas fa-chevron-right"></i></button>
-                            </div>
-                            <div class="date-grid" id="dateGrid">
-                                <!-- Will be populated by JavaScript -->
-                            </div>
-                        </div>
-                        <div class="time-slots" id="timeSlots">
-                            <!-- Will be populated by JavaScript -->
+                <div class="booking-step" data-step="service">
+                    <div class="service-category-bar">
+                        <select class="service-category-select" disabled>
+                            <option>All categories</option>
+                        </select>
+                    </div>
+                    <div id="selectedServicesBox"></div>
+                    <div id="addonServicesHeading" style="display:none; font-weight:600; font-size:18px; margin:18px 0 10px 0;">Anything you wish to add?</div>
+                    <div class="service-grid" id="addonServicesBox">
+                        <!-- Add-on services will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="booking-step" data-step="order-summary" id="orderSummaryStep">
+                    <div style="padding: 0 0 16px 0;">
+                        <div style="font-weight:700; font-size:18px; margin-bottom:8px;">Your order</div>
+                        <div id="orderSummaryBox"></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; font-size:18px; font-weight:600;">
+                            <span>Subtotal</span>
+                            <span id="orderSubtotal">$0</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <div class="booking-summary">
-                    <span>Total: <strong id="bookingTotal">$0</strong></span>
+                <div class="booking-step" data-step="time">
+                    <div class="time-options">
+                        <div class="date-picker">
+                            <span id="currentMonthYear" style="display:block; font-size:18px; font-weight:600; margin-bottom:8px;"></span>
+                            <div class="date-picker-row" id="datePickerRow" style="position:relative;"></div>
+                            <div id="calendarDropdown" class="calendar-dropdown" style="display:none; position:absolute; top:60px; right:0; z-index:1000; background:#fff; border-radius:14px; box-shadow:0 4px 16px rgba(44,44,44,0.12); padding:18px 16px;"></div>
+                        </div>
+                        <div class="selected-date-label" id="selectedDateLabel"></div>
+                        <div class="time-slots" id="timeSlots"></div>
+                    </div>
                 </div>
-                <div class="modal-actions">
-                    <button class="btn btn-secondary" id="prevStep">Back</button>
-                    <button class="btn btn-primary" id="nextStep">Continue</button>
-                </div>
             </div>
+            <!-- Place the choose time bar here, after modal-body -->
+            <div id="chooseTimeBar" class="view-time-bar" style="display:none;"></div>
+            <div id="viewOrderBar"></div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
