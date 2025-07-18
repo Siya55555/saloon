@@ -876,20 +876,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-content {
-    background: white;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 100%;
+    position: relative;
+    width: 400px;
+    height: 90vh;
     max-height: 90vh;
-    overflow-y: auto;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid var(--border-color);
+    min-height: 56px;
 }
 
 .modal-header h3 {
@@ -911,7 +910,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-body {
-    padding: 20px;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding-bottom: 80px; /* height of the bar */
 }
 
 .booking-step {
@@ -989,6 +990,76 @@ h1, h2, h3, h4, h5, h6 {
 .modal-actions {
     display: flex;
     gap: 10px;
+}
+
+/* Professional Grid Styles */
+.professional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 18px;
+    margin: 20px 0;
+}
+
+.professional-card {
+    background: #faf9f7;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44,44,44,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 10px 14px 10px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+    border: 2px solid transparent;
+    min-height: 170px;
+}
+
+.professional-card.selected {
+    border: 2px solid var(--primary-color);
+    background: #f3e9d2;
+    box-shadow: 0 4px 16px rgba(44,44,44,0.10);
+}
+
+.professional-card .pro-image {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background: #eaeaea;
+}
+
+.professional-card .pro-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.professional-card .pro-desc {
+    font-size: 13px;
+    color: var(--text-gray);
+    text-align: center;
+}
+
+.professional-card.service-first {
+    background: #fff;
+    border: 2px dashed #e0e0e0;
+    color: var(--text-gray);
+    justify-content: center;
+}
+
+.professional-card .pro-icon {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .professional-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /* Responsive Design */
@@ -1110,3 +1181,421 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
     background: #c19b2e;
 } 
+
+/* Service Grid Styles for Booking Modal */
+.service-category-bar {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+.service-category-select {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 15px;
+    background: #faf9f7;
+    color: var(--text-dark);
+    outline: none;
+    min-width: 180px;
+    width: 500px;
+    max-width: 100%;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.service-card {
+    background: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44,44,44,0.06);
+    padding: 18px 14px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    min-height: 110px;
+    position: relative;
+}
+
+.service-card.selected {
+    border: 2px solid var(--primary-color);
+    background: #f3e9d2;
+    box-shadow: 0 4px 16px rgba(44,44,44,0.10);
+}
+
+.service-card .service-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.service-card .service-duration {
+    font-size: 13px;
+    color: var(--text-gray);
+    margin-bottom: 8px;
+}
+
+.service-card .service-price {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: #fff;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 3px 12px;
+    border-radius: 16px;
+    box-shadow: 0 1px 4px rgba(44,44,44,0.06);
+}
+
+@media (max-width: 600px) {
+    .service-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+} 
+
+/* Selected Services Box Styles */
+#selectedServicesBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+.selected-service-card {
+    background: #333333;
+    color: #fff;
+    border-radius: 18px;
+    padding: 16px 14px 16px 14px;
+    min-width: 170px;
+    min-height: 100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 4px 16px rgba(44,44,44,0.18);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    margin-bottom: 10px;
+}
+.selected-service-card .service-name {
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+.selected-service-card .service-duration {
+    color: #e0e0e0;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+.selected-service-card .service-price {
+    background: #fff;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    box-shadow: 0 1px 4px rgba(44,44,44,0.10);
+}
+.selected-service-card .checkmark {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #000000;
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(44,44,44,0.18);
+    border: 4px solid #000000;
+    z-index: 2;
+}
+
+/* Add-on Services Heading */
+#addonServicesHeading {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* View Order Bar */
+#viewOrderBar {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    background: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 22px;
+    font-size: 18px;
+    z-index: 3000;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(44,44,44,0.10);
+    font-weight: 600;
+}
+#viewOrderBar .order-total {
+    font-weight: 700;
+    font-size: 18px;
+}
+#viewOrderBar .view-order-label {
+    font-size: 18px;
+    font-weight: 600;
+} 
+
+.view-order-link {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+} 
+
+/* Horizontal Date Picker Styles */
+.date-picker {
+    margin: 0 0 18px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 8px;
+}
+.date-picker-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    overflow-x: auto;
+    padding: 0 4px;
+}
+.date-btn {
+    background: #f5f5f5;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #222;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 2px;
+}
+.date-btn.selected, .date-btn.today.selected {
+    background: #222;
+    color: #fff;
+}
+.date-btn .day-number {
+    font-size: 17px;
+    font-weight: 700;
+}
+.date-btn .day-name {
+    font-size: 12px;
+    color: #888;
+    font-weight: 400;
+}
+
+.selected-date-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0 16px 0;
+    color: #222;
+}
+
+/* Time Slot Grid Styles */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 12px;
+    margin-bottom: 10px;
+}
+.time-slot {
+    background: #f5f5f5;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 15px;
+    color: #222;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 1px 4px rgba(44,44,44,0.06);
+}
+.time-slot.selected {
+    background: #222;
+    color: #fff;
+}
+.time-slot i {
+    color: #fbc02d;
+    font-size: 17px;
+}
+
+@media (max-width: 600px) {
+    .date-picker-row {
+        gap: 6px;
+    }
+    .date-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 13px;
+    }
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.selected-date-label {
+    text-align: left;
+    margin-left: 4px;
+} 
+
+.calendar-arrow-btn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 1.3rem;
+  color: #111;
+  outline: none;
+  position: relative;
+  transform: translateY(-3px);
+}
+.calendar-arrow-btn:active,
+.calendar-arrow-btn:focus {
+  background: #e0e0e0;
+}
+.calendar-arrow-btn:hover {
+  background: #eaeaea;
+}
+.calendar-arrow-btn::after {
+  content: '\02C5'; /* Unicode for ˅ */
+  font-size: 1.3rem;
+  color: #111;
+  display: block;
+  line-height: 1;
+  font-weight: 500;
+}
+
+/* Remove default arrow text if present */
+.calendar-arrow-btn > * {
+  display: none;
+}
+
+.calendar-dropdown {
+    min-width: 270px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(44,44,44,0.12);
+    padding: 18px 16px 12px 16px;
+    z-index: 1000;
+}
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #222;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.calendar-header button:hover {
+    background: #f5f5f5;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-top: 6px;
+}
+.calendar-day, .calendar-date {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    font-weight: 500;
+    padding: 4px 0;
+}
+.calendar-date {
+    background: #f5f5f5;
+    color: #222;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+}
+.calendar-date.selected {
+    background: #222;
+    color: #fff;
+}
+.calendar-date.today {
+    border: 2px solid #fbc02d;
+}
+.calendar-date.disabled {
+    color: #ccc;
+    background: #fafafa;
+    cursor: not-allowed;
+    pointer-events: none;
+} 
+
+/* Add bottom padding to the scrollable content area to prevent overlap */
+.booking-modal-content {
+  padding-bottom: 80px; /* adjust to match .view-order-bar height + spacing */
+} 
+
+#chooseTimeBar {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  background: #222;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0;
+  font-size: 1.15rem;
+  z-index: 3000;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(44,44,44,0.10);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s;
+}
+#chooseTimeBar:hover, #chooseTimeBar:focus {
+  background: #111;
+}
