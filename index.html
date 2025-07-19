@@ -25,30 +25,7 @@
                             <a href="#locations" class="nav-link location-link">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span id="selectedLocationName">LOCATIONS</span>
-                                <i class="fas fa-chevron-down"></i>
                             </a>
-                            <div class="location-dropdown">
-                                <div class="dropdown-header">
-                                    <h3>Choose a location</h3>
-                                    <div class="dropdown-controls">
-                                        <i class="fas fa-bars"></i>
-                                        <i class="fas fa-times"></i>
-                                    </div>
-                                </div>
-                                <div class="location-tabs">
-                                    <button class="tab-btn active" data-tab="nearby">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        NEARBY
-                                    </button>
-                                    <button class="tab-btn" data-tab="search">
-                                        <i class="fas fa-search"></i>
-                                        SEARCH
-                                    </button>
-                                </div>
-                                <div class="location-list" id="locationList">
-                                    <!-- Locations will be populated by JavaScript -->
-                                </div>
-                            </div>
                         </li>
                         <li><a href="#book" class="nav-link book-now" id="bookNowBtnNav">BOOK NOW</a></li>
                     </ul>
@@ -300,7 +277,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="booking-step active" data-step="professional">
+                <div class="booking-step active" data-step="location">
+                    <div class="location-step-content">
+                        <div class="location-tabs">
+                            <button class="tab-btn active" data-tab="nearby">
+                                <i class="fas fa-map-marker-alt"></i>
+                                NEARBY
+                            </button>
+                            <button class="tab-btn" data-tab="search">
+                                <i class="fas fa-search"></i>
+                                SEARCH
+                            </button>
+                        </div>
+                        <div class="location-list" id="modalLocationList">
+                            <!-- Locations will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-step" data-step="professional">
                     
                     <div class="professional-grid" id="professionalGrid">
                         <!-- Will be populated by JavaScript -->
@@ -321,7 +315,6 @@
                 
                 <div class="booking-step" data-step="order-summary" id="orderSummaryStep">
                     <div style="padding: 0 0 16px 0;">
-                        <div style="font-weight:700; font-size:18px; margin-bottom:8px;">Your order</div>
                         <div id="orderSummaryBox"></div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; font-size:18px; font-weight:600;">
                             <span>Subtotal</span>
@@ -340,10 +333,21 @@
                         <div class="time-slots" id="timeSlots"></div>
                     </div>
                 </div>
+                <div class="booking-step" data-step="final-order" id="finalOrderSummaryStep">
+                    <div style="padding: 0 0 16px 0;">
+                        <div id="finalOrderSummaryBox"></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; font-size:18px; font-weight:600;">
+                            <span>Subtotal</span>
+                            <span id="finalOrderSubtotal">$0</span>
+                        </div>
+                        <div id="finalOrderTimeBox" style="margin-top:18px; font-size:16px;"></div>
+                    </div>
+                </div>
             </div>
             <!-- Place the choose time bar here, after modal-body -->
             <div id="chooseTimeBar" class="view-time-bar" style="display:none;"></div>
             <div id="viewOrderBar"></div>
+            <div id="finalContinueBar" style="display:none;"></div>
         </div>
     </div>
 
