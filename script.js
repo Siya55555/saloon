@@ -317,46 +317,46 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize Locations
 function initializeLocations() {
     if (locationsGrid) {
-        locationsGrid.innerHTML = locations.map(location => `
-            <div class="location-card" data-location-id="${location.id}">
-                <div class="location-header">
-                    <img src="${location.image}" alt="${location.name}" class="location-image">
-                    <div class="location-info">
-                        <h4>${location.name}</h4>
-                        <p>${location.address}</p>
-                    </div>
-                </div>
-                <div class="location-details">
-                    <div class="location-detail">
-                        <i class="fas fa-phone"></i>
-                        <span>${location.phone}</span>
-                    </div>
-                    <div class="location-detail">
-                        <i class="fas fa-clock"></i>
-                        <span>Today's hours: ${location.hours}</span>
-                    </div>
-                    <div class="location-detail">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Google Maps</span>
-                    </div>
-                </div>
-                <div class="location-actions">
-                    <button class="book-btn" onclick="openBookingModal(${location.id})">Make An Appointment</button>
-                    <span class="availability">${location.availability}, Approx Wait time: ${location.waitTime}</span>
-                </div>
-            </div>
-        `).join('');
-    }
-    if (locationList) {
-        locationList.innerHTML = locations.map(location => `
-            <div class="location-item" data-location-id="${location.id}">
+    locationsGrid.innerHTML = locations.map(location => `
+        <div class="location-card" data-location-id="${location.id}">
+            <div class="location-header">
                 <img src="${location.image}" alt="${location.name}" class="location-image">
                 <div class="location-info">
                     <h4>${location.name}</h4>
                     <p>${location.address}</p>
                 </div>
             </div>
-        `).join('');
+            <div class="location-details">
+                <div class="location-detail">
+                    <i class="fas fa-phone"></i>
+                    <span>${location.phone}</span>
+                </div>
+                <div class="location-detail">
+                    <i class="fas fa-clock"></i>
+                    <span>Today's hours: ${location.hours}</span>
+                </div>
+                <div class="location-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Google Maps</span>
+                </div>
+            </div>
+            <div class="location-actions">
+                <button class="book-btn" onclick="openBookingModal(${location.id})">Make An Appointment</button>
+                <span class="availability">${location.availability}, Approx Wait time: ${location.waitTime}</span>
+            </div>
+        </div>
+    `).join('');
+    }
+    if (locationList) {
+    locationList.innerHTML = locations.map(location => `
+        <div class="location-item" data-location-id="${location.id}">
+            <img src="${location.image}" alt="${location.name}" class="location-image">
+            <div class="location-info">
+                <h4>${location.name}</h4>
+                <p>${location.address}</p>
+            </div>
+        </div>
+    `).join('');
     }
     setTimeout(() => {
         if (locationList) {
@@ -400,16 +400,16 @@ function initializeLocations() {
         }
     }, 0);
     if (modalLocationOptions) {
-        modalLocationOptions.innerHTML = locations.map(location => `
-            <div class="service-option">
-                <input type="radio" name="location" id="loc-${location.id}" value="${location.id}">
-                <label for="loc-${location.id}">
-                    <span class="service-name">${location.name}</span>
-                    <span class="service-duration">${location.address}</span>
-                    <span class="service-price">${location.availability}</span>
-                </label>
-            </div>
-        `).join('');
+    modalLocationOptions.innerHTML = locations.map(location => `
+        <div class="service-option">
+            <input type="radio" name="location" id="loc-${location.id}" value="${location.id}">
+            <label for="loc-${location.id}">
+                <span class="service-name">${location.name}</span>
+                <span class="service-duration">${location.address}</span>
+                <span class="service-price">${location.availability}</span>
+            </label>
+        </div>
+    `).join('');
     }
 }
 
@@ -468,8 +468,8 @@ function initializeBookingModal() {
                 updateBookingTotal();
                 renderServiceSelection();
                 enableNextStep();
-            });
         });
+    });
         document.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('click', function() {
                 const serviceId = this.getAttribute('data-service-id');
@@ -660,7 +660,9 @@ function openBookingModal(locationId = null) {
             locationRadio.checked = true;
         }
     }
-    // Show professional step first (step index 0 is now professional)
+    // Always render location list and tabs before showing the first step
+    renderModalLocationList('nearby');
+    setupLocationTabs();
     showStep(0);
 }
 
@@ -708,6 +710,16 @@ function renderOrderSummary() {
     const orderSubtotal = document.getElementById('orderSubtotal');
     if (!orderSummaryBox || !orderSubtotal) return;
     let html = '';
+    // Show location info if selected
+    if (bookingState.selectedLocation) {
+        html += `<div class="order-location-info">
+            <i class='fas fa-map-marker-alt order-location-icon'></i>
+            <div style='flex:1;'>
+                <div class='order-location-name'>${bookingState.selectedLocation.name}</div>
+                <div class='order-location-address'>${bookingState.selectedLocation.address}</div>
+            </div>
+        </div>`;
+    }
     // Show professional info if selected
     if (bookingState.selectedProfessional) {
         html += `<div style="display:flex; align-items:center; background:#f5f5f5; border-radius:12px; padding:16px 14px; margin-bottom:10px;">
@@ -735,14 +747,110 @@ function renderOrderSummary() {
     orderSubtotal.textContent = `$${bookingState.total}`;
 }
 
-// Update showStep to call renderOrderSummary for the order summary step
+function renderFinalOrderSummary() {
+    const finalOrderSummaryBox = document.getElementById('finalOrderSummaryBox');
+    const finalOrderSubtotal = document.getElementById('finalOrderSubtotal');
+    const finalOrderTimeBox = document.getElementById('finalOrderTimeBox');
+    if (!finalOrderSummaryBox || !finalOrderSubtotal || !finalOrderTimeBox) return;
+    let html = '';
+    // Show location info if selected
+    if (bookingState.selectedLocation) {
+        html += `<div class="order-location-info">
+            <i class='fas fa-map-marker-alt order-location-icon'></i>
+            <div style='flex:1;'>
+                <div class='order-location-name'>${bookingState.selectedLocation.name}</div>
+                <div class='order-location-address'>${bookingState.selectedLocation.address}</div>
+            </div>
+        </div>`;
+    }
+    // Show professional info if selected
+    if (bookingState.selectedProfessional) {
+        html += `<div style="display:flex; align-items:center; background:#f5f5f5; border-radius:12px; padding:16px 14px; margin-bottom:10px;">
+            <img src='${bookingState.selectedProfessional.image}' alt='${bookingState.selectedProfessional.name}' style='width:48px; height:48px; border-radius:8px; object-fit:cover; margin-right:12px;'>
+            <div style='flex:1;'>
+                <div style='font-weight:700; font-size:16px;'>${bookingState.selectedProfessional.name}</div>
+                <div style='color:#888; font-size:13px;'>${bookingState.selectedProfessional.available ? 'Available Today' : ''}</div>
+            </div>
+        </div>`;
+    }
+    // Show main service and add-ons
+    if (bookingState.selectedServices.length > 0) {
+        html += `<div style="background:#f5f5f5; border-radius:12px; padding:16px 14px; margin-bottom:10px;">
+            <div style='font-weight:700; font-size:16px;'>${bookingState.selectedServices[0].name}</div>
+            <div style='color:#888; font-size:14px;'>${bookingState.selectedServices[0].duration}</div>
+            <div style='font-weight:700; float:right;'>$${bookingState.selectedServices[0].price}</div>
+        </div>`;
+        if (bookingState.selectedServices.length > 1) {
+            html += bookingState.selectedServices.slice(1).map(s =>
+                `<div style='margin-left:10px; color:#666; font-size:15px;'>+ ${s.name} <span style='float:right;'>$${s.price}</span></div>`
+            ).join('');
+        }
+    }
+    finalOrderSummaryBox.innerHTML = html;
+    finalOrderSubtotal.textContent = `$${bookingState.total}`;
+    // Show selected date and time
+    if (bookingState.selectedDate && bookingState.selectedTime) {
+        const date = new Date(bookingState.selectedDate);
+        const dateStr = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        finalOrderTimeBox.innerHTML = `<strong>Time:</strong> ${dateStr} at ${bookingState.selectedTime}`;
+    } else {
+        finalOrderTimeBox.innerHTML = '';
+    }
+}
+
+// 1. Populate modalLocationList in the new location step
+function renderModalLocationList(tab = 'nearby') {
+    const modalLocationList = document.getElementById('modalLocationList');
+    if (!modalLocationList) return;
+    let filteredLocations = locations;
+    // For now, 'nearby' just shows all; implement search if needed
+    if (tab === 'search') {
+        // Optionally filter for search
+    }
+    modalLocationList.innerHTML = filteredLocations.map(loc => `
+        <div class="location-item" data-location-id="${loc.id}">
+            <img src="${loc.image}" alt="${loc.name}">
+            <div class="location-info">
+                <div class="location-name">${loc.name}</div>
+                <div class="location-address">${loc.address}</div>
+            </div>
+        </div>
+    `).join('');
+    // Add click handlers
+    modalLocationList.querySelectorAll('.location-item').forEach(item => {
+        item.onclick = function() {
+            const id = parseInt(this.getAttribute('data-location-id'));
+            bookingState.selectedLocation = locations.find(l => l.id === id);
+            // Highlight selected
+            modalLocationList.querySelectorAll('.location-item').forEach(i => i.classList.remove('selected'));
+            this.classList.add('selected');
+            // Enable next step
+            enableNextStep();
+            // Immediately go to professional step
+            showStep(1);
+        };
+    });
+}
+
+// 2. Handle tab switching in location step
+function setupLocationTabs() {
+    const tabs = document.querySelectorAll('.location-tabs .tab-btn');
+    tabs.forEach(tab => {
+        tab.onclick = function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            renderModalLocationList(this.getAttribute('data-tab'));
+        };
+    });
+}
+
+// 3. Update showStep to handle new step order and logic
 function showStep(stepIndex) {
     const steps = document.querySelectorAll('.booking-step');
     steps.forEach((step, index) => {
         step.classList.toggle('active', index === stepIndex);
     });
     bookingState.currentStep = stepIndex;
-    updateNavigationButtons();
     // Show/hide back button
     const modalBackBtn = document.getElementById('modalBackBtn');
     if (modalBackBtn) {
@@ -754,122 +862,125 @@ function showStep(stepIndex) {
         let title = '';
         switch (stepIndex) {
             case 0:
-                title = 'Choose a professional';
+                title = 'Choose a location';
                 break;
             case 1:
-                title = 'Choose a service';
+                title = 'Choose a professional';
                 break;
             case 2:
-                title = 'Your order';
+                title = 'Choose a service';
                 break;
             case 3:
+                title = 'Your order';
+                break;
+            case 4:
                 title = 'Choose a time';
+                break;
+            case 5:
+                title = 'Your order';
                 break;
             default:
                 title = '';
         }
         modalStepTitle.textContent = title;
     }
-    // Hide both bars by default
+    // Hide all sticky bars by default
     document.getElementById('viewOrderBar').style.display = 'none';
     document.getElementById('chooseTimeBar').style.display = 'none';
+    document.getElementById('finalContinueBar').style.display = 'none';
     // Show the appropriate bar for the current step
-    if (stepIndex === 2) { // order summary step
+    if (stepIndex === 3) { // order summary step (1)
         const chooseTimeBar = document.getElementById('chooseTimeBar');
         chooseTimeBar.innerHTML = 'Choose a time';
         chooseTimeBar.style.display = 'flex';
         chooseTimeBar.onclick = function() {
-            showStep(3); // Go to time step
+            showStep(4); // Go to time step
         };
-    } else if (stepIndex === 3) { // time selection step
-        document.getElementById('viewOrderBar').style.display = 'flex';
+    } else if (stepIndex === 4) { // time selection step
+        const viewOrderBar = document.getElementById('viewOrderBar');
+        viewOrderBar.style.display = 'flex';
+        viewOrderBar.innerHTML = `<div class="view-order-link" style="width:100%;text-align:center;font-weight:700;cursor:pointer;">View order</div>`;
+        // Attach click handler to go to final order summary
+        const viewOrderLink = viewOrderBar.querySelector('.view-order-link');
+        if (viewOrderLink) {
+            viewOrderLink.onclick = function() {
+                showStep(5); // Go to final order summary
+                renderFinalOrderSummary();
+            };
+        }
+    } else if (stepIndex === 5) { // final order summary step (2)
+        renderFinalOrderSummary();
+        const finalContinueBar = document.getElementById('finalContinueBar');
+        finalContinueBar.style.display = 'flex';
+        finalContinueBar.innerHTML = `
+            <button id="finalContinueBtn">Continue</button>
+        `;
+        const finalContinueBtn = document.getElementById('finalContinueBtn');
+        if (finalContinueBtn) {
+            finalContinueBtn.onclick = function() {
+                document.getElementById('bookingModal').style.display = 'none';
+                alert('Booking confirmed!');
+            };
+        }
     }
     // Show/hide order next button
     const orderNextBtn = document.getElementById('orderNextBtn');
     if (orderNextBtn) {
-        orderNextBtn.style.display = (stepIndex === 2) ? 'block' : 'none';
+        orderNextBtn.style.display = (stepIndex === 3) ? 'block' : 'none';
     }
     // Render service selection UI every time the service step is shown
-    if (typeof renderServiceSelection === 'function' && stepIndex === 1) {
+    if (typeof renderServiceSelection === 'function' && stepIndex === 2) {
         renderServiceSelection();
     }
     // Render order summary every time the order summary step is shown
-    if (typeof renderOrderSummary === 'function' && stepIndex === 2) {
+    if (typeof renderOrderSummary === 'function' && stepIndex === 3) {
         renderOrderSummary();
     }
     // Initialize date picker and time slots on time step
-    if (stepIndex === 3 && typeof initializeDatePicker === 'function') {
-        // If no date is selected, default to today
+    if (stepIndex === 4 && typeof initializeDatePicker === 'function') {
         if (!bookingState.selectedDate) {
             const today = new Date();
             bookingState.selectedDate = today.toISOString().split('T')[0];
         }
         initializeDatePicker();
     }
-}
-
-function nextStep() {
-    const currentStep = bookingState.currentStep;
-    const steps = document.querySelectorAll('.booking-step');
-    // If on service step, jump directly to time step
-    if (currentStep === 1) {
-        showStep(2); // assuming time step is index 2 after reordering
-        // Initialize date picker if moving to time step
-        initializeDatePicker();
-        return;
-    }
-    if (currentStep < steps.length - 1) {
-        showStep(currentStep + 1);
-        
-        // Initialize date picker if moving to time step
-        if (currentStep + 1 === 2) {
-            initializeDatePicker();
-        }
-    } else {
-        // Final step - complete booking
-        completeBooking();
+    // Render location list and setup tabs on location step
+    if (stepIndex === 0) {
+        renderModalLocationList('nearby');
+        setupLocationTabs();
     }
 }
 
-function prevStep() {
-    const currentStep = bookingState.currentStep;
-    if (currentStep > 0) {
-        showStep(currentStep - 1);
-    }
-}
-
-function updateNavigationButtons() {
-    // Navigation buttons have been removed, so this function is now empty.
-    // The back button and step title are handled in showStep.
-    return;
-}
-
+// 4. Only allow proceeding from location step if a location is selected
 function enableNextStep() {
     const currentStep = bookingState.currentStep;
     let canProceed = false;
-    
     switch (currentStep) {
-        case 0: // Service selection
-            canProceed = bookingState.selectedServices && bookingState.selectedServices.length > 0;
-            break;
-        case 1: // Location selection
+        case 0: // Location selection
             canProceed = bookingState.selectedLocation !== null;
             break;
-        case 2: // Professional selection
+        case 1: // Professional selection
             canProceed = bookingState.selectedProfessional !== null;
             break;
-        case 3: // Time selection
+        case 2: // Service selection
+            canProceed = bookingState.selectedServices && bookingState.selectedServices.length > 0;
+            break;
+        case 3: // Order summary
+            canProceed = true;
+            break;
+        case 4: // Time selection
             canProceed = bookingState.selectedDate !== null && bookingState.selectedTime !== null;
             break;
+        case 5: // Final order summary
+            canProceed = true;
+            break;
     }
-    
-    // nextStepBtn.disabled = !canProceed; // Removed
-    // nextStepBtn.style.opacity = canProceed ? '1' : '0.5'; // Removed
+    // You can enable/disable next step button here if you add one
 }
 
 function updateBookingTotal() {
     if (bookingTotal) {
-        bookingTotal.textContent = `$${bookingState.total}`;
+    bookingTotal.textContent = `$${bookingState.total}`;
     }
 }
 
