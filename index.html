@@ -271,7 +271,10 @@
                 <button class="modal-back" id="modalBackBtn" style="display:none; background:none; border:none; font-size:20px; cursor:pointer; margin-right:10px;">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <span id="modalStepTitle" style="flex:1; text-align:center; font-size:20px; font-weight:600;"></span>
+                <span id="modalStepTitle"></span>
+                <button class="modal-menu" id="modalMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <button class="modal-close">
                     <i class="fas fa-times"></i>
                 </button>
@@ -295,9 +298,39 @@
                     </div>
                 </div>
                 <div class="booking-step" data-step="professional">
-                    
                     <div class="professional-grid" id="professionalGrid">
-                        <!-- Will be populated by JavaScript -->
+                        <!-- Choose a service first card -->
+                        <div class="professional-card service-first" data-professional-id="any">
+                            <div class="pro-icon"><i class="fas fa-random"></i></div>
+                            <div class="pro-name">Choose a service first</div>
+                            <div class="pro-desc">Book with any professional</div>
+                        </div>
+                        <!-- Professional cards -->
+                        <div class="professional-card" data-professional-id="allan">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Allan A." class="pro-image">
+                            <div class="pro-name">Allan A.</div>
+                            <div class="pro-desc">Available Today</div>
+                        </div>
+                        <div class="professional-card" data-professional-id="idiel">
+                            <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Idiel C." class="pro-image">
+                            <div class="pro-name">Idiel C.</div>
+                            <div class="pro-desc">Available Today</div>
+                        </div>
+                        <div class="professional-card" data-professional-id="marcos">
+                            <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="Marcos C." class="pro-image">
+                            <div class="pro-name">Marcos C.</div>
+                            <div class="pro-desc">Available Today</div>
+                        </div>
+                        <div class="professional-card" data-professional-id="john">
+                            <img src="https://randomuser.me/api/portraits/men/35.jpg" alt="John D." class="pro-image">
+                            <div class="pro-name">John D.</div>
+                            <div class="pro-desc">Available Today</div>
+                        </div>
+                        <div class="professional-card" data-professional-id="mike">
+                            <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Mike S." class="pro-image">
+                            <div class="pro-name">Mike S.</div>
+                            <div class="pro-desc">Available Today</div>
+                        </div>
                     </div>
                 </div>
                 <div class="booking-step" data-step="service">
