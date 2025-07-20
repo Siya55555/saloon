@@ -1666,7 +1666,7 @@ h1, h2, h3, h4, h5, h6 {
 #modalStepTitle {
     display: block;
     flex: 1;
-    text-align: center;
+    text-align: left;
     font-size: 22px;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
@@ -1674,4 +1674,24 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.01em;
     line-height: 1.2;
     background: none;
+} 
+
+/* Modal menu (hamburger) button styles */
+.modal-menu {
+  background: none;
+  border: none;
+  font-size: 20px; /* Match close button size */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #222;
+  height: 38px;
+  width: 38px;
+}
+.modal-menu:focus,
+.modal-menu:hover {
+  background: #f5f5f5;
+  border-radius: 50%;
 } 
