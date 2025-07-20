@@ -301,7 +301,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ensure modal back button works
     const modalBackBtn = document.getElementById('modalBackBtn');
     if (modalBackBtn) {
-        modalBackBtn.addEventListener('click', prevStep);
+        modalBackBtn.addEventListener('click', function() {
+            if (bookingState.currentStep > 0) {
+                showStep(bookingState.currentStep - 1);
+            }
+        });
     }
     // Ensure navbar Book Now button works
     const bookNowBtnNav = document.getElementById('bookNowBtnNav');
@@ -480,6 +484,7 @@ function initializeBookingModal() {
                 updateBookingTotal();
                 renderServiceSelection();
                 enableNextStep();
+                // Don't automatically advance - let user click order bar
             });
         });
         // View order bar
@@ -513,55 +518,30 @@ function initializeBookingModal() {
     });
 
     // Professional selection (added)
-    function renderProfessionalGrid() {
-        const proGrid = document.getElementById('professionalGrid');
-        if (!proGrid) return;
-        let html = '';
-        // Show 'Choose a service first' card ONLY if a professional is selected
-        if (bookingState.selectedProfessional) {
-            html += `
-                <div class="professional-card service-first" data-professional-id="any">
-                    <div class="pro-icon"><i class="fas fa-random"></i></div>
-                    <div class="pro-name">Choose a service first</div>
-                    <div class="pro-desc">Book with any professional</div>
-                </div>
-            `;
-        }
-        html += professionals.filter(p => p.id !== 'any').map(pro => `
-            <div class="professional-card${bookingState.selectedProfessional && bookingState.selectedProfessional.id === pro.id ? ' selected' : ''}" data-professional-id="${pro.id}">
-                <img src="${pro.image}" alt="${pro.name}" class="pro-image">
-                <div class="pro-name">${pro.name}</div>
-                <div class="pro-desc">Available Today</div>
-            </div>
-        `).join('');
-        proGrid.innerHTML = html;
-        // Add event listeners
+    function setupProfessionalCards() {
+        // Add event listeners to professional cards
         document.querySelectorAll('.professional-card').forEach(card => {
             card.addEventListener('click', function() {
                 const proId = this.getAttribute('data-professional-id');
                 // If clicking the 'Choose a service first' card, go to service step
                 if (proId === 'any') {
-                    showStep(1);
+                    showStep(2); // Go to service step
                     return;
                 }
-                // Toggle selection
-                if (bookingState.selectedProfessional && bookingState.selectedProfessional.id === proId) {
-                    bookingState.selectedProfessional = null;
-                    renderProfessionalGrid(); // re-render to hide the card
-                    enableNextStep();
-                    return;
-                }
+                // Select professional and go to service step
                 bookingState.selectedProfessional = professionals.find(p => p.id === proId);
-                renderProfessionalGrid(); // re-render to show the card
+                // Update visual selection
+                document.querySelectorAll('.professional-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
                 enableNextStep();
-                // Optionally, move to next step automatically
-                // showStep(1);
+                // Move to next step automatically
+                showStep(2);
             });
         });
     }
-    // In initializeBookingModal, call renderProfessionalGrid instead of direct HTML
+    // In initializeBookingModal, call setupProfessionalCards
     setTimeout(() => {
-        renderProfessionalGrid();
+        setupProfessionalCards();
     }, 0);
 }
 
@@ -699,7 +679,7 @@ function setupViewOrderBar() {
     if (viewOrderLink) {
         viewOrderLink.onclick = function() {
             console.log('View order clicked');
-            showStep(2); // Try 2 instead of 1
+            showStep(3); // Go to order page 1
             renderOrderSummary();
         };
     }
@@ -1067,9 +1047,33 @@ function renderTimeSlots(dateIso) {
     // Add event listeners to time slots
     document.querySelectorAll('.time-slot').forEach(slot => {
         slot.addEventListener('click', function() {
-            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-            this.classList.add('selected');
-            bookingState.selectedTime = this.dataset.time;
+            // If this slot is already selected, unselect it
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+                bookingState.selectedTime = null;
+                // Change text back to "View order"
+                const viewOrderBar = document.getElementById('viewOrderBar');
+                if (viewOrderBar) {
+                    viewOrderBar.innerHTML = `<div class="view-order-link" style="width:100%;text-align:center;font-weight:700;cursor:pointer;">View order</div>`;
+                    // Remove the click handler for checkout
+                    viewOrderBar.onclick = null;
+                }
+            } else {
+                // Select this slot
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                bookingState.selectedTime = this.dataset.time;
+                // Change text to "Go to checkout"
+                const viewOrderBar = document.getElementById('viewOrderBar');
+                if (viewOrderBar) {
+                    viewOrderBar.innerHTML = `<div class="checkout-link" style="width:100%;text-align:center;font-weight:700;cursor:pointer;">Go to checkout</div>`;
+                    // Add click handler to go to order page 2
+                    viewOrderBar.onclick = function() {
+                        showStep(5); // Go to final order summary
+                        renderFinalOrderSummary();
+                    };
+                }
+            }
             enableNextStep();
         });
     });
@@ -1099,7 +1103,7 @@ function setupOrderNextBtn() {
     const orderNextBtn = document.getElementById('orderNextBtn');
     if (orderNextBtn) {
         orderNextBtn.onclick = function() {
-            showStep(3); // Go to time step
+            showStep(4); // Go to time step
         };
     }
 }
